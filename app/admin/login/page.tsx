@@ -81,9 +81,6 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <a href="/test-teclado" style={{ display: 'block', marginTop: 24, fontSize: 11, color: '#9ca3af', textAlign: 'center' }}>
-          [teste teclado]
-        </a>
       </div>
     </div>
   );
