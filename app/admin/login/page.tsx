@@ -47,6 +47,7 @@ export default function LoginPage() {
               onChange={e => setEmail(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-800"
               placeholder="admin@exemplo.com"
+              style={{ fontSize: '16px' }}
             />
           </div>
 
@@ -59,6 +60,7 @@ export default function LoginPage() {
               onChange={e => setPassword(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-800"
               placeholder="••••••••"
+              style={{ fontSize: '16px' }}
             />
           </div>
 
