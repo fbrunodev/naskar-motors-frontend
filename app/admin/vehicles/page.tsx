@@ -3,10 +3,10 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { getVehicles, deleteVehicle, markVehicleSold, markVehicleAvailable, getSettings, updateVehicle, getMe, getUsers } from '@/lib/api';
+import { getVehicles, deleteVehicle, markVehicleSold, markVehicleAvailable, getSettings, updateVehicle, getMe } from '@/lib/api';
 import { removeToken, isTokenValid } from '@/lib/auth';
 import AdminLayout from '@/components/AdminLayout';
-import type { Vehicle, StoreSettings, User } from '@/types';
+import type { Vehicle, StoreSettings } from '@/types';
 
 function formatPrice(price: number) {
   return price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -85,8 +85,6 @@ export default function VehiclesPage() {
   const [featuringId, setFeaturingId] = useState<number | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<{ id: number; name: string } | null>(null);
   const [soldConfirm, setSoldConfirm] = useState<{ id: number; name: string } | null>(null);
-  const [employees, setEmployees] = useState<User[]>([]);
-  const [selectedSoldById, setSelectedSoldById] = useState<number | ''>('');
 
   const [searchText, setSearchText] = useState('');
   const [searchDebounced, setSearchDebounced] = useState('');
@@ -138,13 +136,7 @@ export default function VehiclesPage() {
   }
 
   function handleMarkSold(id: number, name: string) {
-    setSelectedSoldById('');
     setSoldConfirm({ id, name });
-    if (userRole === 'owner' && token) {
-      getUsers(token)
-        .then(users => setEmployees(users.filter(u => u.role === 'employee' && u.is_active)))
-        .catch(() => {});
-    }
   }
 
   async function confirmMarkSold() {
@@ -153,8 +145,7 @@ export default function VehiclesPage() {
     setSoldConfirm(null);
     setSoldingId(id);
     try {
-      const soldById = userRole === 'owner' && selectedSoldById ? selectedSoldById : undefined;
-      await markVehicleSold(id, token, soldById as number | undefined);
+      await markVehicleSold(id, token);
       setVehicles(prev => prev.map(v => v.id === id ? { ...v, is_sold: true, sold_at: new Date().toISOString() } : v));
     } catch { alert('Erro ao marcar como vendido.'); }
     finally { setSoldingId(null); }
@@ -235,26 +226,11 @@ export default function VehiclesPage() {
           <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.45)' }}>
             <div style={{ background: '#fff', borderRadius: 16, padding: 32, maxWidth: 400, width: '90%', boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}>
               <h3 className="text-base font-bold text-gray-900 mb-2">Marcar como vendido?</h3>
-              <p className="text-sm text-gray-500 mb-4">
+              <p className="text-sm text-gray-500 mb-6">
                 Tem certeza que deseja marcar{' '}
                 <span className="font-semibold text-gray-800">{soldConfirm.name}</span>{' '}
                 como vendido?
               </p>
-              {userRole === 'owner' && employees.length > 0 && (
-                <div className="mb-6">
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Quem realizou a venda?</label>
-                  <select
-                    value={selectedSoldById}
-                    onChange={e => setSelectedSoldById(e.target.value ? Number(e.target.value) : '')}
-                    style={{ ...SELECT_STYLE, width: '100%' }}
-                  >
-                    <option value="">Selecionar funcionário...</option>
-                    {employees.map(emp => (
-                      <option key={emp.id} value={emp.id}>{emp.name}</option>
-                    ))}
-                  </select>
-                </div>
-              )}
               <div className="flex gap-3 justify-end">
                 <button onClick={() => setSoldConfirm(null)} className="px-4 py-2 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
                   Cancelar
