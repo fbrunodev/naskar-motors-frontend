@@ -31,7 +31,7 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
     name: storeName,
     short_name: storeName,
     description: 'Catálogo de veículos',
-    start_url: '/',
+    start_url: '/admin/login',
     display: 'standalone',
     background_color: '#0a1628',
     theme_color: '#0a1628',
