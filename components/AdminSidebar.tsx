@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getSettings, getMe } from '@/lib/api';
-import { getToken, removeToken } from '@/lib/auth';
+import { getToken, removeToken, getRoleFromToken } from '@/lib/auth';
 
 // ---- Icons ----
 
@@ -127,7 +127,7 @@ export default function AdminSidebar() {
   const router = useRouter();
   const pathname = usePathname();
   const [storeName, setStoreName] = useState('');
-  const [userRole, setUserRole] = useState('employee');
+  const [userRole, setUserRole] = useState(() => getRoleFromToken());
 
   useEffect(() => {
     getSettings().then(s => setStoreName(s.name)).catch(() => {});
