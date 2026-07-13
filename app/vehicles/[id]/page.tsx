@@ -93,6 +93,7 @@ export default function VehicleDetailPage() {
   const [offset, setOffset] = useState(0);
   const [notFound, setNotFound] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [widePhotos, setWidePhotos] = useState<Set<number>>(new Set());
   const touchStart = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -185,16 +186,23 @@ export default function VehicleDetailPage() {
           <div className="flex h-[320px] md:gap-[10px]">
             {[0, 1, 2].map(i => {
               const photoIndex = (offset + i) % n;
+              const isWide = widePhotos.has(photoIndex);
               return (
                 <div
                   key={`${offset}-${i}`}
-                  className="relative overflow-hidden flex-shrink-0 cursor-pointer w-full md:w-1/3"
+                  className={`relative overflow-hidden flex-shrink-0 cursor-pointer w-full md:w-1/3${isWide ? ' bg-gray-100' : ''}`}
                   onClick={() => setLightboxIndex(photoIndex)}
                 >
                   <img
                     src={photos[photoIndex]}
                     alt={`${vehicle.brand} ${vehicle.model} — foto ${photoIndex + 1}`}
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full ${isWide ? 'object-contain' : 'object-cover'}`}
+                    onLoad={e => {
+                      const img = e.currentTarget;
+                      if (img.naturalWidth / img.naturalHeight > 1.85) {
+                        setWidePhotos(prev => { const s = new Set(prev); s.add(photoIndex); return s; });
+                      }
+                    }}
                   />
                 </div>
               );
