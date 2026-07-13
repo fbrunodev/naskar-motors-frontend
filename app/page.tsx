@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getSettings, getVehicles } from '@/lib/api';
@@ -219,7 +219,7 @@ function SkeletonCard() {
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
-export default function HomePage() {
+function CatalogContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -475,5 +475,13 @@ export default function HomePage() {
         </a>
       )}
     </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={<div>Carregando...</div>}>
+      <CatalogContent />
+    </Suspense>
   );
 }
