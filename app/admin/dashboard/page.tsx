@@ -46,7 +46,7 @@ function computeSalesByMonth(vehicles: Vehicle[]) {
 function computeCategoryDist(vehicles: Vehicle[]) {
   const labels: Record<string, string> = { car: 'Carros', motorcycle: 'Motos', truck: 'Caminhões' };
   const counts: Record<string, number> = {};
-  vehicles.forEach(v => { counts[v.category] = (counts[v.category] ?? 0) + 1; });
+  vehicles.filter(v => !v.is_sold).forEach(v => { counts[v.category] = (counts[v.category] ?? 0) + 1; });
   return Object.entries(counts)
     .map(([cat, value]) => { const name = labels[cat] ?? cat; return { name, value, fill: CAT_COLORS[name] ?? '#888888' }; })
     .sort((a, b) => b.value - a.value);
@@ -243,7 +243,7 @@ export default function DashboardPage() {
           </div>
 
           <div style={{ ...CARD_STYLE, padding: '24px' }}>
-            <h2 className="text-sm font-semibold text-gray-700 mb-5">Por categoria</h2>
+            <h2 className="text-sm font-semibold text-gray-700 mb-5">Estoque por categoria</h2>
             {loading || catData.length === 0 ? (
               <div className="h-[300px] flex items-center justify-center text-sm text-gray-400">
                 {loading ? 'Carregando...' : 'Sem dados'}
