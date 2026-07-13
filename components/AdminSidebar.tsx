@@ -164,13 +164,13 @@ export default function AdminSidebar() {
 
   const isDashboard   = pathname === '/admin/dashboard';
   const isMyDashboard = pathname === '/admin/my-dashboard';
-  const isVehicles    = pathname === '/admin' || pathname.startsWith('/admin/vehicles');
+  const isVehicles    = pathname.startsWith('/admin/vehicles');
   const isNew         = pathname === '/admin/vehicles/new';
   const isSettings    = pathname === '/admin/settings';
   const isTeam        = pathname === '/admin/team';
 
   // Bottom nav uses stricter vehicle check (excludes /new which has its own slot)
-  const isVehiclesList = (pathname === '/admin' || pathname.startsWith('/admin/vehicles')) && !isNew;
+  const isVehiclesList = pathname.startsWith('/admin/vehicles') && !isNew;
 
   return (
     <>
