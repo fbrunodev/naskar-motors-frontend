@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import ServiceWorkerProvider from '@/components/ServiceWorkerProvider';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
@@ -43,7 +42,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR">
       <body className="antialiased bg-gray-50 text-gray-900">
-        <ServiceWorkerProvider />
         {children}
       </body>
     </html>
