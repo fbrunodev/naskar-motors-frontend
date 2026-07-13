@@ -158,6 +158,7 @@ export default function AdminSidebar() {
   }
 
   function logout() {
+    if (!window.confirm('Tem certeza que deseja sair?')) return;
     removeToken();
     router.replace('/admin/login');
   }
@@ -260,12 +261,20 @@ export default function AdminSidebar() {
             <BottomNavItem href="/admin/vehicles/new" icon={<IconPlus size={22} />}  label="Novo"      active={isNew} highlight />
             <BottomNavItem href="/admin/team"         icon={<IconTeam size={22} />}  label="Equipe"    active={isTeam} />
             <BottomNavItem href="/admin/settings"     icon={<IconGear size={22} />}  label="Configs"   active={isSettings} />
+            <button onClick={logout} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', flex: 1, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+              <span style={{ color: '#cc0000', display: 'flex' }}><IconLogout /></span>
+              <span style={{ fontSize: '10px', color: '#cc0000', fontWeight: 600 }}>Sair</span>
+            </button>
           </>
         ) : (
           <>
-            <BottomNavItem href="/admin/my-dashboard" icon={<IconChart size={22} />} label="Meu Dashboard" active={isMyDashboard} />
-            <BottomNavItem href="/admin/vehicles"     icon={<IconCar size={22} />}   label="Veículos"      active={isVehiclesList} />
-            <BottomNavItem href="/admin/vehicles/new" icon={<IconPlus size={22} />}  label="Novo"          active={isNew} highlight />
+            <BottomNavItem href="/admin/my-dashboard" icon={<IconChart size={22} />} label="Dashboard" active={isMyDashboard} />
+            <BottomNavItem href="/admin/vehicles"     icon={<IconCar size={22} />}   label="Veículos"  active={isVehiclesList} />
+            <BottomNavItem href="/admin/vehicles/new" icon={<IconPlus size={22} />}  label="Novo"      active={isNew} highlight />
+            <button onClick={logout} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', flex: 1, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+              <span style={{ color: '#cc0000', display: 'flex' }}><IconLogout /></span>
+              <span style={{ fontSize: '10px', color: '#cc0000', fontWeight: 600 }}>Sair</span>
+            </button>
           </>
         )}
       </nav>
