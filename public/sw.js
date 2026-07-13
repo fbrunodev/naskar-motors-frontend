@@ -3,8 +3,7 @@ self.addEventListener('push', function (event) {
   event.waitUntil(
     self.registration.showNotification(data.title || 'Naskar Motors', {
       body: data.body || '',
-      icon: data.icon || '/icon.png',
-      badge: '/badge.png',
+      icon: data.icon || '/icon-192x192.png',
       vibrate: [200, 100, 200],
     })
   );
