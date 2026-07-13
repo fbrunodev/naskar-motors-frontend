@@ -114,7 +114,7 @@ export default function Header() {
 
   return (
     <header className="relative z-30" style={{ backgroundColor: '#0a1628', height: '64px' }}>
-      <div className="h-full px-6 flex items-center max-w-[1200px] mx-auto">
+      <div className="h-full px-6 flex items-center">
 
         {/* ── Left: Logo ── */}
         <div className="flex-shrink-0">

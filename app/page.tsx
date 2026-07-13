@@ -285,7 +285,7 @@ function CatalogContent() {
       <Header />
 
       {/* ── GRID ── */}
-      <div className="px-3 md:px-10 pt-5 pb-24 md:pb-8 max-w-[1200px] mx-auto">
+      <div className="px-3 md:px-10 pt-5 pb-24 md:pb-8">
 {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
             {Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)}

@@ -170,7 +170,7 @@ export default function VehicleDetailPage() {
         <PhotoPlaceholder />
       ) : (
         <div
-          className="relative overflow-hidden max-w-[1200px] mx-auto"
+          className="relative overflow-hidden"
           style={{ marginTop: '50px' }}
           onTouchStart={e => { touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }}
           onTouchEnd={e => {
