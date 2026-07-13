@@ -8,6 +8,7 @@ import {
 } from 'recharts';
 import { getMe, getMyStats, getSettings } from '@/lib/api';
 import { getToken, isTokenValid, removeToken } from '@/lib/auth';
+import { subscribeToPush } from '@/lib/notifications';
 import AdminLayout from '@/components/AdminLayout';
 import NotificationPrompt from '@/components/NotificationPrompt';
 import type { User, EmployeeStats } from '@/types';
@@ -91,6 +92,26 @@ export default function MyDashboardPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-8">
 
         <NotificationPrompt />
+
+        {/* TEMP: reativar notificações */}
+        <div className="flex justify-end">
+          <button
+            onClick={async () => {
+              const t = getToken();
+              if (!t) return;
+              try {
+                localStorage.removeItem('naskar_notif_dismissed_at');
+                await subscribeToPush(t);
+                alert('Notificações reativadas com sucesso!');
+              } catch (e) {
+                alert(e instanceof Error ? e.message : 'Erro ao reativar notificações.');
+              }
+            }}
+            className="text-xs font-medium px-3 py-1.5 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors"
+          >
+            🔄 Reativar notificações
+          </button>
+        </div>
 
         {/* Greeting */}
         <div>

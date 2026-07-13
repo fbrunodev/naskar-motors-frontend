@@ -8,6 +8,7 @@ import {
 } from 'recharts';
 import { getVehicles, testNotification } from '@/lib/api';
 import { removeToken, isTokenValid } from '@/lib/auth';
+import { subscribeToPush } from '@/lib/notifications';
 import AdminLayout from '@/components/AdminLayout';
 import NotificationPrompt from '@/components/NotificationPrompt';
 import type { Vehicle } from '@/types';
@@ -167,7 +168,22 @@ export default function DashboardPage() {
         <NotificationPrompt />
 
         {/* TEMP: test notification button */}
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-2">
+          <button
+            onClick={async () => {
+              if (!token) return;
+              try {
+                localStorage.removeItem('naskar_notif_dismissed_at');
+                await subscribeToPush(token);
+                alert('Notificações reativadas com sucesso!');
+              } catch (e) {
+                alert(e instanceof Error ? e.message : 'Erro ao reativar notificações.');
+              }
+            }}
+            className="text-xs font-medium px-3 py-1.5 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors"
+          >
+            🔄 Reativar notificações
+          </button>
           <button
             disabled={testingNotif || !token}
             onClick={async () => {
