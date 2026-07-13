@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { getVehicles, deleteVehicle, markVehicleSold, getSettings, updateVehicle, getMe, getUsers } from '@/lib/api';
+import { getVehicles, deleteVehicle, markVehicleSold, markVehicleAvailable, getSettings, updateVehicle, getMe, getUsers } from '@/lib/api';
 import { removeToken, isTokenValid } from '@/lib/auth';
 import AdminLayout from '@/components/AdminLayout';
 import type { Vehicle, StoreSettings, User } from '@/types';
@@ -160,8 +160,14 @@ export default function VehiclesPage() {
     finally { setSoldingId(null); }
   }
 
-  function handleMarkAvailable(id: number) {
-    setVehicles(prev => prev.map(v => v.id === id ? { ...v, is_sold: false, sold_at: null } : v));
+  async function handleMarkAvailable(id: number) {
+    if (!token) return;
+    try {
+      await markVehicleAvailable(id, token);
+      setVehicles(prev => prev.map(v => v.id === id ? { ...v, is_sold: false, sold_at: null, sold_by: null } : v));
+    } catch {
+      alert('Erro ao marcar como disponível.');
+    }
   }
 
   async function handleToggleFeatured(vehicle: Vehicle) {

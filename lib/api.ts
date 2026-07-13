@@ -99,6 +99,14 @@ export async function markVehicleSold(id: number, token: string, soldById?: numb
   if (!res.ok) throw new Error('Falha ao marcar como vendido');
 }
 
+export async function markVehicleAvailable(id: number, token: string): Promise<void> {
+  const res = await apiFetch(`${API_URL}/vehicles/${id}/available`, {
+    method: 'PATCH',
+    headers: authHeaders(token),
+  });
+  if (!res.ok) throw new Error('Falha ao marcar como disponível');
+}
+
 export async function uploadPhoto(vehicleId: number, file: File, token: string): Promise<{ url: string; photos: string[] }> {
   const form = new FormData();
   form.append('file', file);
