@@ -218,10 +218,7 @@ export default function DashboardPage() {
                     cy="50%"
                     outerRadius={90}
                     dataKey="value"
-                    label={({ cx, cy, midAngle, innerRadius, outerRadius, percent }: {
-                      cx: number; cy: number; midAngle: number;
-                      innerRadius: number; outerRadius: number; percent: number;
-                    }) => {
+                    label={({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
                       const RADIAN = Math.PI / 180;
                       const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
                       const x = cx + radius * Math.cos(-midAngle * RADIAN);
