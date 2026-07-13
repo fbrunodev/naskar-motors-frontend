@@ -89,10 +89,11 @@ export async function deleteVehicle(id: number, token: string): Promise<void> {
   if (!res.ok) throw new Error('Falha ao excluir veículo');
 }
 
-export async function markVehicleSold(id: number, token: string): Promise<void> {
+export async function markVehicleSold(id: number, token: string, soldById?: number): Promise<void> {
   const res = await apiFetch(`${API_URL}/vehicles/${id}/sold`, {
     method: 'PATCH',
-    headers: authHeaders(token),
+    headers: { ...authHeaders(token), 'Content-Type': 'application/json' },
+    body: JSON.stringify(soldById ? { sold_by_id: soldById } : {}),
   });
   if (!res.ok) throw new Error('Falha ao marcar como vendido');
 }
