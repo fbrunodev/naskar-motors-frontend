@@ -126,7 +126,7 @@ function VehicleCard({ vehicle, settings }: {
 
         {/* Photo counter bottom-left */}
         {n > 1 && (
-          <span className="absolute bottom-2 left-2 bg-black/60 text-white select-none" style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '99px' }}>
+          <span className="absolute bottom-2 left-2 bg-black/75 text-white select-none" style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '99px' }}>
             {photoIndex + 1} / {n}
           </span>
         )}
@@ -154,7 +154,7 @@ function VehicleCard({ vehicle, settings }: {
 
       {/* Content */}
       <div className="px-3 pt-3 pb-3 flex flex-col gap-1.5 flex-1">
-        <h3 className="text-[14px] font-bold text-gray-900 leading-tight line-clamp-1 uppercase">
+        <h3 className="text-[14px] font-bold text-gray-900 leading-tight line-clamp-2 uppercase">
           {vehicle.brand} {vehicle.model}
         </h3>
 
@@ -169,7 +169,7 @@ function VehicleCard({ vehicle, settings }: {
             <CalendarIcon />
             {vehicle.year}
           </span>
-          <span className="flex items-center gap-1">
+          <span className="flex items-center gap-1 whitespace-nowrap">
             <SpeedometerIcon />
             {formatKm(vehicle.km)}
           </span>
@@ -285,9 +285,9 @@ function CatalogContent() {
       <Header />
 
       {/* ── GRID ── */}
-      <div style={{ padding: '20px 40px' }}>
+      <div className="px-3 md:px-10 pt-5 pb-24 md:pb-8">
 {loading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
             {Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)}
           </div>
         ) : vehicles.length === 0 ? (
@@ -304,7 +304,7 @@ function CatalogContent() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
             {veiculosPaginados.map(v => (
               <VehicleCard key={v.id} vehicle={v} settings={settings} />
             ))}
