@@ -49,7 +49,8 @@ export async function getVehicles(filters?: VehicleFilters): Promise<Vehicle[]> 
   if (filters?.min_price != null) params.set('min_price', String(filters.min_price));
   if (filters?.max_price != null) params.set('max_price', String(filters.max_price));
   if (filters?.include_sold) params.set('include_sold', 'true');
-  const query = params.size ? `?${params.toString()}` : '';
+  const queryString = params.toString();
+  const query = queryString ? `?${queryString}` : '';
   const res = await fetch(`${API_URL}/vehicles/${query}`);
   if (!res.ok) throw new Error('Falha ao buscar veículos');
   return res.json();
