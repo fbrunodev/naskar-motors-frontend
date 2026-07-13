@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { login } from '@/lib/api';
 import { setToken, isTokenValid } from '@/lib/auth';
+import { subscribeToPush } from '@/lib/notifications';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function LoginPage() {
     try {
       const data = await login(email, password);
       setToken(data.access_token);
+      subscribeToPush(data.access_token).catch(() => {});
       router.replace('/admin');
     } catch {
       setError('E-mail ou senha incorretos.');

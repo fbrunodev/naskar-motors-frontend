@@ -5,7 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getSettings, getMe } from '@/lib/api';
 import { getToken, removeToken } from '@/lib/auth';
-import { isPushSubscribed, subscribeToPush } from '@/lib/notifications';
 
 // ---- Icons ----
 
@@ -129,33 +128,13 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const [storeName, setStoreName] = useState('');
   const [userRole, setUserRole] = useState('employee');
-  const [notifBanner, setNotifBanner] = useState(false);
-  const [subscribingNotif, setSubscribingNotif] = useState(false);
 
   useEffect(() => {
     getSettings().then(s => setStoreName(s.name)).catch(() => {});
     const token = getToken();
     if (token) getMe(token).then(u => setUserRole(u.role)).catch(() => {});
 
-    if (typeof window !== 'undefined' && 'PushManager' in window && 'Notification' in window) {
-      isPushSubscribed().then(subscribed => {
-        if (!subscribed) setNotifBanner(true);
-      });
-    }
   }, []);
-
-  async function handleSubscribeNotif() {
-    const token = getToken();
-    if (!token) return;
-    setSubscribingNotif(true);
-    try {
-      await subscribeToPush(token);
-      setNotifBanner(false);
-    } catch {
-      // Permission denied or error — hide banner anyway
-      setNotifBanner(false);
-    } finally { setSubscribingNotif(false); }
-  }
 
   function logout() {
     if (!window.confirm('Tem certeza que deseja sair?')) return;
@@ -211,22 +190,6 @@ export default function AdminSidebar() {
           )}
           <NavLink href="/" icon={<IconEye />} label="Ver loja" active={false} external />
         </nav>
-
-        {/* Notification banner */}
-        {notifBanner && (
-          <div style={{ padding: '12px 16px', background: 'rgba(204,0,0,0.08)', borderTop: '1px solid rgba(204,0,0,0.15)' }}>
-            <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '11px', marginBottom: '8px', lineHeight: 1.5 }}>
-              Receba alertas de vendas em tempo real.
-            </p>
-            <button
-              onClick={handleSubscribeNotif}
-              disabled={subscribingNotif}
-              style={{ fontSize: '11px', fontWeight: 600, color: '#fff', background: '#cc0000', border: 'none', borderRadius: '6px', padding: '5px 10px', cursor: 'pointer', opacity: subscribingNotif ? 0.6 : 1 }}
-            >
-              {subscribingNotif ? 'Ativando...' : '🔔 Ativar notificações'}
-            </button>
-          </div>
-        )}
 
         {/* Logout */}
         <div style={{ padding: '16px 24px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>

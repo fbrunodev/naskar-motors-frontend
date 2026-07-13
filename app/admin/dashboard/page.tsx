@@ -10,7 +10,6 @@ import { getVehicles, testNotification } from '@/lib/api';
 import { removeToken, isTokenValid } from '@/lib/auth';
 import { subscribeToPush } from '@/lib/notifications';
 import AdminLayout from '@/components/AdminLayout';
-import NotificationPrompt from '@/components/NotificationPrompt';
 import type { Vehicle } from '@/types';
 
 const MONTHS_PT = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
@@ -164,8 +163,6 @@ export default function DashboardPage() {
   return (
     <AdminLayout>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8">
-
-        <NotificationPrompt />
 
         {/* TEMP: test notification button */}
         <div className="flex justify-end gap-2">

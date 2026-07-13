@@ -10,7 +10,6 @@ import { getMe, getMyStats, getSettings } from '@/lib/api';
 import { getToken, isTokenValid, removeToken } from '@/lib/auth';
 import { subscribeToPush } from '@/lib/notifications';
 import AdminLayout from '@/components/AdminLayout';
-import NotificationPrompt from '@/components/NotificationPrompt';
 import type { User, EmployeeStats } from '@/types';
 
 function formatPrice(n: number) {
@@ -90,8 +89,6 @@ export default function MyDashboardPage() {
   return (
     <AdminLayout>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-8">
-
-        <NotificationPrompt />
 
         {/* TEMP: reativar notificações */}
         <div className="flex justify-end">
