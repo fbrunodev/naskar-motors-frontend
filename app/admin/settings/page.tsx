@@ -6,7 +6,7 @@ import { getSettings, getMe, updateSettings, uploadLogo, updateMe } from '@/lib/
 import { getToken, isTokenValid, removeToken } from '@/lib/auth';
 import { isPushSubscribed, subscribeToPush, unsubscribeFromPush, testPushNotification } from '@/lib/notifications';
 import AdminLayout from '@/components/AdminLayout';
-import type { StoreSettings, User } from '@/types';
+import type { User } from '@/types';
 
 const INPUT = 'w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-gray-400 transition-colors';
 const LABEL = 'block text-xs font-medium text-gray-500 mb-1';
@@ -50,8 +50,6 @@ export default function SettingsPage() {
   // Colors
   const [primary, setPrimary]       = useState('#0a1628');
   const [secondary, setSecondary]   = useState('#cc0000');
-  const [savingColors, setSavingColors] = useState(false);
-  const [colorsMsg, setColorsMsg]   = useState('');
 
   // Account — dados pessoais
   const [acName, setAcName]         = useState('');
@@ -66,10 +64,6 @@ export default function SettingsPage() {
   const [acConfirmPw, setAcConfirmPw] = useState('');
   const [savingPw, setSavingPw]       = useState(false);
   const [pwMsg, setPwMsg]             = useState('');
-
-  // kept for compat (unused after refactor)
-  const [savingAc, setSavingAc]     = useState(false);
-  const [acMsg, setAcMsg]           = useState('');
 
   const [logoUploading, setLogoUploading] = useState(false);
 
@@ -150,16 +144,6 @@ export default function SettingsPage() {
       setCommissionMsg('Comissão salva!');
     } catch { setCommissionMsg('Erro ao salvar.'); }
     finally { setSavingCommission(false); }
-  }
-
-  async function handleSaveColors() {
-    if (!token) return;
-    setSavingColors(true); setColorsMsg('');
-    try {
-      await updateSettings({ name: storeName, city: city || null, whatsapp: whatsapp || null, primary_color: primary, secondary_color: secondary }, token);
-      setColorsMsg('Cores salvas!');
-    } catch { setColorsMsg('Erro ao salvar.'); }
-    finally { setSavingColors(false); }
   }
 
   async function handleLogoChange(e: React.ChangeEvent<HTMLInputElement>) {

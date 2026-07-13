@@ -178,7 +178,7 @@ export default function EditVehiclePage() {
   function toggleDeletePhoto(url: string) {
     setPhotosToDelete(prev => {
       const next = new Set(prev);
-      next.has(url) ? next.delete(url) : next.add(url);
+      if (next.has(url)) { next.delete(url); } else { next.add(url); }
       return next;
     });
   }
@@ -271,8 +271,6 @@ export default function EditVehiclePage() {
       </AdminLayout>
     );
   }
-
-  const visibleExistingPhotos = existingPhotos.filter(url => !photosToDelete.has(url));
 
   return (
     <AdminLayout>

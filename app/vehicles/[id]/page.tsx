@@ -7,12 +7,6 @@ import { getVehicle, getSettings } from '@/lib/api';
 import Header from '@/components/Header';
 import type { Vehicle, StoreSettings } from '@/types';
 
-const CATEGORY_LABEL: Record<string, string> = {
-  car: 'Carro',
-  motorcycle: 'Moto',
-  truck: 'Caminhão',
-};
-
 function formatPrice(p: number) {
   const decimals = p % 1 !== 0 ? 2 : 0;
   return p.toLocaleString('pt-BR', {
