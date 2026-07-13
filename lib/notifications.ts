@@ -38,6 +38,9 @@ export async function subscribeToPush(token: string): Promise<void> {
   const reg = await navigator.serviceWorker.ready;
   const vapidKey = await getVapidPublicKey();
 
+  const existing = await reg.pushManager.getSubscription();
+  if (existing) await existing.unsubscribe();
+
   const sub = await reg.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: urlBase64ToUint8Array(vapidKey),
