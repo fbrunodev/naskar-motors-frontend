@@ -370,7 +370,7 @@ export default function VehicleDetailPage() {
       {/* ── MOBILE STICKY BOTTOM BAR ── */}
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 px-4 py-3 flex items-center justify-between md:hidden">
         <div>
-          <p className="text-xs text-gray-400">Preço</p>
+          <p className="text-xs text-gray-400">Valor</p>
           <p className="text-xl font-bold text-[#0a1628]">{formatPrice(vehicle.price)}</p>
         </div>
         <a href={waUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#25d366] text-white font-semibold px-5 py-3 rounded-lg text-sm">
