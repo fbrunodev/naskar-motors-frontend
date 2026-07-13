@@ -8,6 +8,9 @@ export const viewport: Viewport = {
   themeColor: '#0a1628',
   width: 'device-width',
   initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover',
 };
 
 export async function generateMetadata(): Promise<Metadata> {
