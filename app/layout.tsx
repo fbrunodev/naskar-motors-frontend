@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: storeName,
     description: 'Catálogo de veículos',
-    ...(logoUrl ? { icons: { apple: logoUrl } } : {}),
+    icons: { apple: logoUrl ?? '/apple-touch-icon-180x180.png' },
   };
 }
 
