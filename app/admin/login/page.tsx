@@ -32,7 +32,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-100 flex items-start justify-center px-4 pt-20 pb-8" style={{ overflowY: 'auto' }}>
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-sm p-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-1">Naskar Motors</h1>
         <p className="text-sm text-gray-500 mb-8">Acesso administrativo</p>
@@ -47,6 +47,7 @@ export default function LoginPage() {
               onChange={e => setEmail(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-gray-800"
               placeholder="admin@exemplo.com"
+              style={{ touchAction: 'manipulation' }}
             />
           </div>
 
@@ -59,6 +60,7 @@ export default function LoginPage() {
               onChange={e => setPassword(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-gray-800"
               placeholder="••••••••"
+              style={{ touchAction: 'manipulation' }}
             />
           </div>
 
