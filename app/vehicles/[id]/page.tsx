@@ -182,13 +182,13 @@ export default function VehicleDetailPage() {
             }
           }}
         >
-          <div className="flex h-[320px] md:h-[380px] md:gap-[10px]">
-            {[0, 1].map(i => {
+          <div className="flex h-[320px] md:gap-[10px]">
+            {[0, 1, 2].map(i => {
               const photoIndex = (offset + i) % n;
               return (
                 <div
                   key={`${offset}-${i}`}
-                  className="relative overflow-hidden flex-shrink-0 cursor-pointer w-full md:w-1/2"
+                  className="relative overflow-hidden flex-shrink-0 cursor-pointer w-full md:w-1/3"
                   onClick={() => setLightboxIndex(photoIndex)}
                 >
                   <img
