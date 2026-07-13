@@ -76,7 +76,7 @@ export default function Header() {
   }, [searchParams]);
 
   const whatsapp = settings?.whatsapp?.replace(/\D/g, '') ?? '';
-  const waUrl = whatsapp ? `https://wa.me/${whatsapp}` : '#';
+  const waUrl = whatsapp ? `https://wa.me/${whatsapp}?text=${encodeURIComponent('Olá, tenho interesse em um veículo!')}` : '#';
   const formattedPhone = settings?.whatsapp ? formatPhone(settings.whatsapp) : '';
   const currentCategory = searchParams.get('category') ?? '';
 
