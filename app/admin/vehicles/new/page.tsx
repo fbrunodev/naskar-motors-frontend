@@ -21,12 +21,16 @@ interface FormData {
   category: string; brand: string; model: string; brand_id: string; model_id: string;
   year: string; km: string; price: string; color: string; description: string;
   is_featured: boolean; transmission: string; fuel: string; doors: string; body_type: string;
+  cilindrada: string; marchas: string; motor_type: string; cooling: string; moto_style: string;
+  starter: string; front_brake: string; rear_brake: string; fuel_system: string;
 }
 
 const INITIAL: FormData = {
   category: 'car', brand: '', model: '', brand_id: '', model_id: '',
   year: '', km: '', price: '', color: '', description: '',
   is_featured: false, transmission: '', fuel: '', doors: '', body_type: '',
+  cilindrada: '', marchas: '', motor_type: '', cooling: '', moto_style: '',
+  starter: '', front_brake: '', rear_brake: '', fuel_system: '',
 };
 
 const INPUT = 'w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-gray-400 transition-colors bg-white';
@@ -191,6 +195,15 @@ export default function NewVehiclePage() {
         fuel: form.fuel || undefined,
         doors: form.doors ? Number(form.doors) : undefined,
         body_type: form.body_type || undefined,
+        cilindrada: form.cilindrada ? Number(form.cilindrada) : undefined,
+        marchas: form.marchas ? Number(form.marchas) : undefined,
+        motor_type: form.motor_type || undefined,
+        cooling: form.cooling || undefined,
+        moto_style: form.moto_style || undefined,
+        starter: form.starter || undefined,
+        front_brake: form.front_brake || undefined,
+        rear_brake: form.rear_brake || undefined,
+        fuel_system: form.fuel_system || undefined,
         features,
       }, token);
 
@@ -300,53 +313,143 @@ export default function NewVehiclePage() {
                   onChange={e => field('color', e.target.value)} placeholder="Ex: Prata" />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className={LABEL}>Câmbio</label>
-                  <select className={INPUT} value={form.transmission} onChange={e => field('transmission', e.target.value)}>
-                    <option value="">Selecione</option>
-                    <option value="Manual">Manual</option>
-                    <option value="Automático">Automático</option>
-                    <option value="CVT">CVT</option>
-                    <option value="Automatizado">Automatizado</option>
-                  </select>
-                </div>
-                <div>
-                  <label className={LABEL}>Combustível</label>
-                  <select className={INPUT} value={form.fuel} onChange={e => field('fuel', e.target.value)}>
-                    <option value="">Selecione</option>
-                    <option value="Gasolina">Gasolina</option>
-                    <option value="Flex">Flex</option>
-                    <option value="Diesel">Diesel</option>
-                    <option value="Elétrico">Elétrico</option>
-                    <option value="Híbrido">Híbrido</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className={LABEL}>Portas</label>
-                  <select className={INPUT} value={form.doors} onChange={e => field('doors', e.target.value)}>
-                    <option value="">Selecione</option>
-                    <option value="2">2</option>
-                    <option value="4">4</option>
-                  </select>
-                </div>
-                <div>
-                  <label className={LABEL}>Carroceria</label>
-                  <select className={INPUT} value={form.body_type} onChange={e => field('body_type', e.target.value)}>
-                    <option value="">Selecione</option>
-                    <option value="Hatch">Hatch</option>
-                    <option value="Sedan">Sedan</option>
-                    <option value="SUV">SUV</option>
-                    <option value="Picape">Picape</option>
-                    <option value="Conversível">Conversível</option>
-                    <option value="Minivan">Minivan</option>
-                    <option value="Caminhonete">Caminhonete</option>
-                  </select>
-                </div>
-              </div>
+              {form.category === 'motorcycle' ? (
+                <>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className={LABEL}>Cilindrada (cc)</label>
+                      <input className={INPUT} type="number" min={0} value={form.cilindrada}
+                        onChange={e => field('cilindrada', e.target.value)} placeholder="Ex: 150" />
+                    </div>
+                    <div>
+                      <label className={LABEL}>Marchas</label>
+                      <select className={INPUT} value={form.marchas} onChange={e => field('marchas', e.target.value)}>
+                        <option value="">Selecione</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className={LABEL}>Tipo de motor</label>
+                      <select className={INPUT} value={form.motor_type} onChange={e => field('motor_type', e.target.value)}>
+                        <option value="">Selecione</option>
+                        <option value="2 Tempos">2 Tempos</option>
+                        <option value="4 Tempos">4 Tempos</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className={LABEL}>Refrigeração</label>
+                      <select className={INPUT} value={form.cooling} onChange={e => field('cooling', e.target.value)}>
+                        <option value="">Selecione</option>
+                        <option value="Ar">Ar</option>
+                        <option value="Água">Água</option>
+                        <option value="Óleo">Óleo</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className={LABEL}>Estilo</label>
+                      <select className={INPUT} value={form.moto_style} onChange={e => field('moto_style', e.target.value)}>
+                        <option value="">Selecione</option>
+                        <option value="Street">Street</option>
+                        <option value="Trail">Trail</option>
+                        <option value="Utilitária">Utilitária</option>
+                        <option value="Esportiva">Esportiva</option>
+                        <option value="Scooter">Scooter</option>
+                        <option value="Custom">Custom</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className={LABEL}>Partida</label>
+                      <select className={INPUT} value={form.starter} onChange={e => field('starter', e.target.value)}>
+                        <option value="">Selecione</option>
+                        <option value="Elétrica">Elétrica</option>
+                        <option value="Pedal">Pedal</option>
+                        <option value="Ambas">Ambas</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className={LABEL}>Freio dianteiro</label>
+                      <select className={INPUT} value={form.front_brake} onChange={e => field('front_brake', e.target.value)}>
+                        <option value="">Selecione</option>
+                        <option value="Disco">Disco</option>
+                        <option value="Tambor">Tambor</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className={LABEL}>Freio traseiro</label>
+                      <select className={INPUT} value={form.rear_brake} onChange={e => field('rear_brake', e.target.value)}>
+                        <option value="">Selecione</option>
+                        <option value="Disco">Disco</option>
+                        <option value="Tambor">Tambor</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className={LABEL}>Alimentação</label>
+                    <select className={INPUT} value={form.fuel_system} onChange={e => field('fuel_system', e.target.value)}>
+                      <option value="">Selecione</option>
+                      <option value="Carburador">Carburador</option>
+                      <option value="Injeção Eletrônica">Injeção Eletrônica</option>
+                    </select>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className={LABEL}>Câmbio</label>
+                      <select className={INPUT} value={form.transmission} onChange={e => field('transmission', e.target.value)}>
+                        <option value="">Selecione</option>
+                        <option value="Manual">Manual</option>
+                        <option value="Automático">Automático</option>
+                        <option value="CVT">CVT</option>
+                        <option value="Automatizado">Automatizado</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className={LABEL}>Combustível</label>
+                      <select className={INPUT} value={form.fuel} onChange={e => field('fuel', e.target.value)}>
+                        <option value="">Selecione</option>
+                        <option value="Gasolina">Gasolina</option>
+                        <option value="Flex">Flex</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Elétrico">Elétrico</option>
+                        <option value="Híbrido">Híbrido</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className={LABEL}>Portas</label>
+                      <select className={INPUT} value={form.doors} onChange={e => field('doors', e.target.value)}>
+                        <option value="">Selecione</option>
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className={LABEL}>Carroceria</label>
+                      <select className={INPUT} value={form.body_type} onChange={e => field('body_type', e.target.value)}>
+                        <option value="">Selecione</option>
+                        <option value="Hatch">Hatch</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Picape">Picape</option>
+                        <option value="Conversível">Conversível</option>
+                        <option value="Minivan">Minivan</option>
+                        <option value="Caminhonete">Caminhonete</option>
+                      </select>
+                    </div>
+                  </div>
+                </>
+              )}
 
               <div>
                 <label className={LABEL}>Descrição</label>

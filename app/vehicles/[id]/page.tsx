@@ -135,14 +135,27 @@ export default function VehicleDetailPage() {
   const photos = vehicle.photos;
   const n = photos.length;
 
+  const isMoto = vehicle.category === 'motorcycle';
   const specs = [
     { label: 'Ano',           value: vehicle.year },
     { label: 'Quilometragem', value: formatKm(vehicle.km) },
     { label: 'Cor',           value: vehicle.color || '—' },
-    ...(vehicle.transmission ? [{ label: 'Câmbio',      value: vehicle.transmission }] : []),
-    ...(vehicle.fuel         ? [{ label: 'Combustível', value: vehicle.fuel }] : []),
-    ...(vehicle.doors        ? [{ label: 'Portas',      value: String(vehicle.doors) }] : []),
-    ...(vehicle.body_type    ? [{ label: 'Carroceria',  value: vehicle.body_type }] : []),
+    ...(isMoto ? [
+      ...(vehicle.cilindrada  ? [{ label: 'Cilindrada',    value: `${vehicle.cilindrada} cc` }] : []),
+      ...(vehicle.marchas     ? [{ label: 'Marchas',       value: String(vehicle.marchas) }] : []),
+      ...(vehicle.motor_type  ? [{ label: 'Motor',         value: vehicle.motor_type }] : []),
+      ...(vehicle.cooling     ? [{ label: 'Refrigeração',  value: vehicle.cooling }] : []),
+      ...(vehicle.moto_style  ? [{ label: 'Estilo',        value: vehicle.moto_style }] : []),
+      ...(vehicle.starter     ? [{ label: 'Partida',       value: vehicle.starter }] : []),
+      ...(vehicle.front_brake ? [{ label: 'Fr. dianteiro', value: vehicle.front_brake }] : []),
+      ...(vehicle.rear_brake  ? [{ label: 'Fr. traseiro',  value: vehicle.rear_brake }] : []),
+      ...(vehicle.fuel_system ? [{ label: 'Alimentação',   value: vehicle.fuel_system }] : []),
+    ] : [
+      ...(vehicle.transmission ? [{ label: 'Câmbio',      value: vehicle.transmission }] : []),
+      ...(vehicle.fuel         ? [{ label: 'Combustível', value: vehicle.fuel }] : []),
+      ...(vehicle.doors        ? [{ label: 'Portas',      value: String(vehicle.doors) }] : []),
+      ...(vehicle.body_type    ? [{ label: 'Carroceria',  value: vehicle.body_type }] : []),
+    ]),
   ];
 
   const showDescriptionSection = !!vehicle.description && vehicle.description.trim() !== vehicle.model.trim();

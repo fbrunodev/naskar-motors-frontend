@@ -32,6 +32,15 @@ interface FormData {
   fuel: string;
   doors: string;
   body_type: string;
+  cilindrada: string;
+  marchas: string;
+  motor_type: string;
+  cooling: string;
+  moto_style: string;
+  starter: string;
+  front_brake: string;
+  rear_brake: string;
+  fuel_system: string;
 }
 
 export default function EditVehiclePage() {
@@ -88,6 +97,15 @@ export default function EditVehiclePage() {
           fuel: v.fuel ?? '',
           doors: v.doors != null ? String(v.doors) : '',
           body_type: v.body_type ?? '',
+          cilindrada: v.cilindrada != null ? String(v.cilindrada) : '',
+          marchas: v.marchas != null ? String(v.marchas) : '',
+          motor_type: v.motor_type ?? '',
+          cooling: v.cooling ?? '',
+          moto_style: v.moto_style ?? '',
+          starter: v.starter ?? '',
+          front_brake: v.front_brake ?? '',
+          rear_brake: v.rear_brake ?? '',
+          fuel_system: v.fuel_system ?? '',
         });
         setExistingPhotos(v.photos);
         setFeatures(v.features ?? []);
@@ -220,6 +238,15 @@ export default function EditVehiclePage() {
         fuel: form.fuel || undefined,
         doors: form.doors ? Number(form.doors) : undefined,
         body_type: form.body_type || undefined,
+        cilindrada: form.cilindrada ? Number(form.cilindrada) : undefined,
+        marchas: form.marchas ? Number(form.marchas) : undefined,
+        motor_type: form.motor_type || undefined,
+        cooling: form.cooling || undefined,
+        moto_style: form.moto_style || undefined,
+        starter: form.starter || undefined,
+        front_brake: form.front_brake || undefined,
+        rear_brake: form.rear_brake || undefined,
+        fuel_system: form.fuel_system || undefined,
         features,
       }, token);
 
@@ -376,71 +403,158 @@ export default function EditVehiclePage() {
             </div>
           </div>
 
-          {/* Transmission + Fuel */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Câmbio</label>
-              <select
-                value={form.transmission}
-                onChange={e => handleField('transmission', e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500"
-              >
-                <option value="">Selecione</option>
-                <option value="Manual">Manual</option>
-                <option value="Automático">Automático</option>
-                <option value="CVT">CVT</option>
-                <option value="Automatizado">Automatizado</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Combustível</label>
-              <select
-                value={form.fuel}
-                onChange={e => handleField('fuel', e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500"
-              >
-                <option value="">Selecione</option>
-                <option value="Gasolina">Gasolina</option>
-                <option value="Flex">Flex</option>
-                <option value="Diesel">Diesel</option>
-                <option value="Elétrico">Elétrico</option>
-                <option value="Híbrido">Híbrido</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Doors + Body type */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Portas</label>
-              <select
-                value={form.doors}
-                onChange={e => handleField('doors', e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500"
-              >
-                <option value="">Selecione</option>
-                <option value="2">2</option>
-                <option value="4">4</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Carroceria</label>
-              <select
-                value={form.body_type}
-                onChange={e => handleField('body_type', e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500"
-              >
-                <option value="">Selecione</option>
-                <option value="Hatch">Hatch</option>
-                <option value="Sedan">Sedan</option>
-                <option value="SUV">SUV</option>
-                <option value="Picape">Picape</option>
-                <option value="Conversível">Conversível</option>
-                <option value="Minivan">Minivan</option>
-                <option value="Caminhonete">Caminhonete</option>
-              </select>
-            </div>
-          </div>
+          {/* Moto or Car fields */}
+          {form.category === 'motorcycle' ? (
+            <>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Cilindrada (cc)</label>
+                  <input type="number" min={0} value={form.cilindrada}
+                    onChange={e => handleField('cilindrada', e.target.value)}
+                    placeholder="Ex: 150"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Marchas</label>
+                  <select value={form.marchas} onChange={e => handleField('marchas', e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500">
+                    <option value="">Selecione</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de motor</label>
+                  <select value={form.motor_type} onChange={e => handleField('motor_type', e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500">
+                    <option value="">Selecione</option>
+                    <option value="2 Tempos">2 Tempos</option>
+                    <option value="4 Tempos">4 Tempos</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Refrigeração</label>
+                  <select value={form.cooling} onChange={e => handleField('cooling', e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500">
+                    <option value="">Selecione</option>
+                    <option value="Ar">Ar</option>
+                    <option value="Água">Água</option>
+                    <option value="Óleo">Óleo</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Estilo</label>
+                  <select value={form.moto_style} onChange={e => handleField('moto_style', e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500">
+                    <option value="">Selecione</option>
+                    <option value="Street">Street</option>
+                    <option value="Trail">Trail</option>
+                    <option value="Utilitária">Utilitária</option>
+                    <option value="Esportiva">Esportiva</option>
+                    <option value="Scooter">Scooter</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Partida</label>
+                  <select value={form.starter} onChange={e => handleField('starter', e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500">
+                    <option value="">Selecione</option>
+                    <option value="Elétrica">Elétrica</option>
+                    <option value="Pedal">Pedal</option>
+                    <option value="Ambas">Ambas</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Freio dianteiro</label>
+                  <select value={form.front_brake} onChange={e => handleField('front_brake', e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500">
+                    <option value="">Selecione</option>
+                    <option value="Disco">Disco</option>
+                    <option value="Tambor">Tambor</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Freio traseiro</label>
+                  <select value={form.rear_brake} onChange={e => handleField('rear_brake', e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500">
+                    <option value="">Selecione</option>
+                    <option value="Disco">Disco</option>
+                    <option value="Tambor">Tambor</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Alimentação</label>
+                <select value={form.fuel_system} onChange={e => handleField('fuel_system', e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500">
+                  <option value="">Selecione</option>
+                  <option value="Carburador">Carburador</option>
+                  <option value="Injeção Eletrônica">Injeção Eletrônica</option>
+                </select>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Câmbio</label>
+                  <select value={form.transmission} onChange={e => handleField('transmission', e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500">
+                    <option value="">Selecione</option>
+                    <option value="Manual">Manual</option>
+                    <option value="Automático">Automático</option>
+                    <option value="CVT">CVT</option>
+                    <option value="Automatizado">Automatizado</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Combustível</label>
+                  <select value={form.fuel} onChange={e => handleField('fuel', e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500">
+                    <option value="">Selecione</option>
+                    <option value="Gasolina">Gasolina</option>
+                    <option value="Flex">Flex</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="Elétrico">Elétrico</option>
+                    <option value="Híbrido">Híbrido</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Portas</label>
+                  <select value={form.doors} onChange={e => handleField('doors', e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500">
+                    <option value="">Selecione</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Carroceria</label>
+                  <select value={form.body_type} onChange={e => handleField('body_type', e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-gray-500">
+                    <option value="">Selecione</option>
+                    <option value="Hatch">Hatch</option>
+                    <option value="Sedan">Sedan</option>
+                    <option value="SUV">SUV</option>
+                    <option value="Picape">Picape</option>
+                    <option value="Conversível">Conversível</option>
+                    <option value="Minivan">Minivan</option>
+                    <option value="Caminhonete">Caminhonete</option>
+                  </select>
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Description */}
           <div>

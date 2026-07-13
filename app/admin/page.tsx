@@ -103,7 +103,14 @@ export default function AdminPage() {
     if (!isTokenValid()) { removeToken(); router.replace('/admin/login'); return; }
     const t = localStorage.getItem('naskar_token')!;
     setTokenState(t);
-    getMe(t).then(u => setUserRole(u.role)).catch(() => {});
+    getMe(t).then(u => {
+      setUserRole(u.role);
+      if (u.role === 'owner') {
+        router.replace('/admin/dashboard');
+      } else {
+        router.replace('/admin/my-dashboard');
+      }
+    }).catch(() => {});
   }, [router]);
 
   const fetchVehicles = useCallback(async () => {

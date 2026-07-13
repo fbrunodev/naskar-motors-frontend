@@ -201,7 +201,7 @@ export default function AdminSidebar() {
             ? <NavLink href="/admin/dashboard"    icon={<IconChart />} label="Dashboard"     active={isDashboard} />
             : <NavLink href="/admin/my-dashboard" icon={<IconChart />} label="Meu Dashboard" active={isMyDashboard} />
           }
-          <NavLink href="/admin" icon={<IconCar />} label="Veículos" active={isVehicles} />
+          <NavLink href="/admin/vehicles" icon={<IconCar />} label="Veículos" active={isVehicles} />
           {userRole === 'owner' && (
             <NavLink href="/admin/settings" icon={<IconGear />} label="Configurações" active={isSettings} />
           )}
@@ -256,7 +256,7 @@ export default function AdminSidebar() {
         {userRole === 'owner' ? (
           <>
             <BottomNavItem href="/admin/dashboard"    icon={<IconChart size={22} />} label="Dashboard" active={isDashboard} />
-            <BottomNavItem href="/admin"              icon={<IconCar size={22} />}   label="Veículos"  active={isVehiclesList} />
+            <BottomNavItem href="/admin/vehicles"     icon={<IconCar size={22} />}   label="Veículos"  active={isVehiclesList} />
             <BottomNavItem href="/admin/vehicles/new" icon={<IconPlus size={22} />}  label="Novo"      active={isNew} highlight />
             <BottomNavItem href="/admin/team"         icon={<IconTeam size={22} />}  label="Equipe"    active={isTeam} />
             <BottomNavItem href="/admin/settings"     icon={<IconGear size={22} />}  label="Configs"   active={isSettings} />
@@ -264,7 +264,7 @@ export default function AdminSidebar() {
         ) : (
           <>
             <BottomNavItem href="/admin/my-dashboard" icon={<IconChart size={22} />} label="Meu Dashboard" active={isMyDashboard} />
-            <BottomNavItem href="/admin"              icon={<IconCar size={22} />}   label="Veículos"      active={isVehiclesList} />
+            <BottomNavItem href="/admin/vehicles"     icon={<IconCar size={22} />}   label="Veículos"      active={isVehiclesList} />
             <BottomNavItem href="/admin/vehicles/new" icon={<IconPlus size={22} />}  label="Novo"          active={isNew} highlight />
           </>
         )}
