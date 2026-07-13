@@ -182,7 +182,7 @@ export default function VehicleDetailPage() {
             }
           }}
         >
-          <div className="flex h-[300px] md:h-[1000px] md:gap-[10px]">
+          <div className="flex h-[300px] md:h-[650px] md:gap-[10px]">
             {[0, 1, 2].map(i => {
               const photoIndex = (offset + i) % n;
               return (
