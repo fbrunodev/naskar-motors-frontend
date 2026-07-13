@@ -6,7 +6,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend,
 } from 'recharts';
-import { getVehicles } from '@/lib/api';
+import { getVehicles, testNotification } from '@/lib/api';
 import { removeToken, isTokenValid } from '@/lib/auth';
 import AdminLayout from '@/components/AdminLayout';
 import NotificationPrompt from '@/components/NotificationPrompt';
@@ -97,6 +97,7 @@ export default function DashboardPage() {
   const [token, setToken] = useState<string | null>(null);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(true);
+  const [testingNotif, setTestingNotif] = useState(false);
 
   useEffect(() => {
     if (!isTokenValid()) {
@@ -164,6 +165,28 @@ export default function DashboardPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8">
 
         <NotificationPrompt />
+
+        {/* TEMP: test notification button */}
+        <div className="flex justify-end">
+          <button
+            disabled={testingNotif || !token}
+            onClick={async () => {
+              if (!token) return;
+              setTestingNotif(true);
+              try {
+                await testNotification(token);
+                alert('Notificação de teste enviada!');
+              } catch {
+                alert('Erro ao enviar notificação. Verifique se as notificações estão ativadas.');
+              } finally {
+                setTestingNotif(false);
+              }
+            }}
+            className="text-xs font-medium px-3 py-1.5 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 transition-colors"
+          >
+            {testingNotif ? 'Enviando...' : '🔔 Testar notificação'}
+          </button>
+        </div>
 
         {/* Metric cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

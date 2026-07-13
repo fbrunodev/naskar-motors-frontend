@@ -154,6 +154,14 @@ export async function getUsers(token: string): Promise<User[]> {
   return res.json();
 }
 
+export async function testNotification(token: string): Promise<void> {
+  const res = await apiFetch(`${API_URL}/notifications/test`, {
+    method: 'POST',
+    headers: authHeaders(token),
+  });
+  if (!res.ok) throw new Error('Falha ao enviar notificação de teste');
+}
+
 export async function createUser(data: { name: string; email: string; password: string }, token: string): Promise<User> {
   const res = await apiFetch(`${API_URL}/users/`, {
     method: 'POST',
