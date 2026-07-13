@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getVehicle, getSettings } from '@/lib/api';
@@ -93,6 +93,7 @@ export default function VehicleDetailPage() {
   const [offset, setOffset] = useState(0);
   const [notFound, setNotFound] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const touchStart = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   useEffect(() => {
     getSettings().then(setSettings).catch(console.error);
@@ -168,7 +169,19 @@ export default function VehicleDetailPage() {
       {n === 0 ? (
         <PhotoPlaceholder />
       ) : (
-        <div className="relative overflow-hidden" style={{ marginTop: '50px' }}>
+        <div
+          className="relative overflow-hidden"
+          style={{ marginTop: '50px' }}
+          onTouchStart={e => { touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }}
+          onTouchEnd={e => {
+            const dx = e.changedTouches[0].clientX - touchStart.current.x;
+            const dy = e.changedTouches[0].clientY - touchStart.current.y;
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+              if (dx < 0) setOffset(o => (o + 1) % n);
+              else setOffset(o => (o - 1 + n) % n);
+            }
+          }}
+        >
           <div className="flex h-[280px] md:h-[380px] md:gap-[10px]">
             {[0, 1, 2].map(i => {
               const photoIndex = (offset + i) % n;
@@ -201,6 +214,30 @@ export default function VehicleDetailPage() {
           >
             <ChevronRight />
           </button>
+        </div>
+      )}
+
+      {/* ── DOTS (mobile only) ── */}
+      {n > 1 && (
+        <div className="flex justify-center items-center gap-2 py-3 md:hidden">
+          {Array.from({ length: n }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setOffset(i)}
+              aria-label={`Foto ${i + 1}`}
+              style={{
+                width: i === offset % n ? 10 : 6,
+                height: i === offset % n ? 10 : 6,
+                borderRadius: '50%',
+                background: i === offset % n ? secondaryColor : '#d1d5db',
+                border: 'none',
+                padding: 0,
+                flexShrink: 0,
+                transition: 'all 0.2s',
+                cursor: 'pointer',
+              }}
+            />
+          ))}
         </div>
       )}
 
