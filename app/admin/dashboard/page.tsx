@@ -164,7 +164,7 @@ export default function DashboardPage() {
     <AdminLayout>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8">
 
-        {/* TEMP: test notification button */}
+        {/* Controles de notificação push: reativar assinatura e enviar teste manual */}
         <div className="flex justify-end gap-2">
           <button
             onClick={async () => {

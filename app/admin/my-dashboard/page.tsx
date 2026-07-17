@@ -90,7 +90,7 @@ export default function MyDashboardPage() {
     <AdminLayout>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-8">
 
-        {/* TEMP: reativar notificações */}
+        {/* Botão para reativar assinatura push */}
         <div className="flex justify-end">
           <button
             onClick={async () => {
